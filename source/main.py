@@ -74,7 +74,7 @@ class SaveVKPhoto:
         uploader = VkUpload(self.vk)
         return uploader.photo_messages(photos=self.photos)
     
-    def _get_attrs(self, photo_data, photo_index=0):
+    def _get_attrs(self, photo_data, photo_index):
             """
             Extracting attributes of photo(s) from VK API data structure.
 
@@ -83,7 +83,7 @@ class SaveVKPhoto:
             photo_data : list
                 List of photos data.
             photo_index : int, optional
-                Index of the photo in the data list (0 by default).
+                Index of the photo in the data list.
 
             Returns
             -------
