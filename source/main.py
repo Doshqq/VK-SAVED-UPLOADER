@@ -16,6 +16,8 @@ class SaveVKPhoto:
         The ID of the VK profile where photos will be saved.
     files : str | list | tuple
         Path(s) to the photo(s) to upload.
+    exec : bool
+
 
     Attributes
     ----------
@@ -33,7 +35,7 @@ class SaveVKPhoto:
     save_photo()
         Saves the uploaded photo(s) to the VK profile.
     """
-    def __init__(self, token, owner_id, files: str | list | tuple):
+    def __init__(self, token, owner_id, files: str | list | tuple, exec: bool = True):
         self.owner_id = owner_id
         self.filenames = files
         if isinstance(files, str):
@@ -59,7 +61,7 @@ class SaveVKPhoto:
 
         vk_session = VkApi(token=token)
         self.vk = vk_session.get_api()
-        if __name__ == '__main__':
+        if exec:
             self.save_photo()
 
     def upload_on_server(self):
