@@ -1,4 +1,5 @@
 .env
 Apple Development(MZN8496JKA).cer
 build/
+source/__pycache__
 *.DS_Store

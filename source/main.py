@@ -1,7 +1,9 @@
-import sys
 import time
-from vk_api import VkUpload
 from vk_api import VkApi
+from vk_api import VkUpload
+
+from get_token import init_token
+from tools import resource_path, find_photos
 
 
 class SaveVKPhoto:
@@ -157,23 +159,6 @@ class SaveVKPhoto:
         print(f"{'+' + 60 * '-' + '+'}\n| {'Photo(s) are succesfully saved in your VK profile!'.center(58)} |\n{'+' + 60 * '-' + '+'}\n")
 
 
-def resource_path(relative_path: str = ""):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path).replace("_internal/", "")
-
-def find_photos():
-    base_path = resource_path()
-    valid_extensions = (".jpg", ".jpeg", ".png", ".heic")
-    return sorted(
-        [file for file in os.listdir(base_path) if file.lower().endswith(valid_extensions)],
-        key=lambda f: os.path.getmtime(os.path.join(base_path, f)),
-        reverse=True
-    )[:5]
-
-
 
 
 if __name__ == "__main__":
@@ -194,11 +179,8 @@ if __name__ == "__main__":
         if not TOKEN or not OWNER_ID:
             raise ValueError("Variables TOKEN or OWNER_ID does not found in config.env")
 
-    except Exception as e:
-        print(str(e))
-
-        TOKEN = input(f"\nPaste your VK token: ")
-        OWNER_ID = input(f"\nPaste your VK account ID: ")
+    except Exception:
+        TOKEN, OWNER_ID = init_token()
 
     finally:
         photo_files = find_photos()
@@ -226,4 +208,3 @@ if __name__ == "__main__":
             SaveVKPhoto(token=TOKEN, owner_id=OWNER_ID, files=files)
         except ValueError as e:
             print(e)
-            
